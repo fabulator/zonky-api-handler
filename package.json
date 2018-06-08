@@ -34,9 +34,7 @@
     "@socifi/rollup-config": "^1.10.0"
   },
   "dependencies": {
-    "blob-to-buffer": "^1.2.7",
-    "excel-parser": "^0.2.2",
     "luxon": "^1.2.1",
-    "rest-api-handler": "^1.7.0"
+    "rest-api-handler": "^1.8.0"
   }
 }
