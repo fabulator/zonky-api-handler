@@ -1,5 +1,4 @@
 // @flow
-
 // deposit to investor's wallet
 const DEPOSIT: 'DEPOSIT' = 'DEPOSIT';
 

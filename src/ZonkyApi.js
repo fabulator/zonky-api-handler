@@ -5,7 +5,7 @@ import Api from 'rest-api-handler/src/Api';
 import type { ApiResponseType } from 'rest-api-handler/src';
 import decodeResponse from './decodeResponse';
 import ZonkyApiException from './ZonkyApiException';
-import { APP_WEB, FILE_DOWNLOAD } from './api-scopes';
+import * as SCOPES from './api-scopes';
 import type { TransactionOrientation } from './transaction-orientations';
 import type { TransactionCategory } from './transaction-categories';
 import type { ApiScope } from './api-scopes';
@@ -43,10 +43,7 @@ export default class ZonkyApi extends Api<ApiResponseType<*>> {
     refreshToken: ?string;
     tokenExpire: ?DateTime;
 
-    static SCOPES = {
-        APP_WEB,
-        FILE_DOWNLOAD,
-    };
+    static SCOPES = SCOPES;
 
     constructor() {
         super('https://api.zonky.cz', [
@@ -75,7 +72,7 @@ export default class ZonkyApi extends Api<ApiResponseType<*>> {
         return this.tokenExpire;
     }
 
-    async login(username: string, password: string, scope: ApiScope = APP_WEB): Promise<Token> {
+    async login(username: string, password: string, scope: ApiScope = SCOPES.APP_WEB): Promise<Token> {
         const { data } = await this.post(
             'oauth/token',
             {
