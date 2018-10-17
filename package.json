@@ -26,15 +26,15 @@
   "homepage": "https://github.com/fabulator/zonky-api-handler#readme",
   "devDependencies": {
     "cross-fetch": "^2.1.1",
-    "@socifi/eslint-config": "^1.8.1",
-    "flow-bin": "^0.79.0",
+    "@socifi/eslint-config": "^1.10.0",
+    "flow-bin": "^0.83.0",
     "flow-coverage-report": "^0.6.0",
-    "flow-typed": "^2.3.0",
-    "@socifi/jest-config": "^1.9.0",
+    "flow-typed": "^2.5.1",
+    "@socifi/jest-config": "^1.10.0",
     "@socifi/rollup-config": "^1.10.0"
   },
   "dependencies": {
-    "luxon": "^1.2.1",
-    "rest-api-handler": "^1.8.0"
+    "luxon": "^1.4.3",
+    "rest-api-handler": "^1.8.1"
   }
 }
