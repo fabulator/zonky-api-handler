@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import { DateTime } from 'luxon';
 import { Api, DefaultResponseProcessor, ApiResponseType } from 'rest-api-handler';
 import decodeResponse from './decodeResponse';
@@ -83,7 +84,7 @@ export default class ZonkyApi extends Api<ApiResponseType<any>> {
     public async login(
         username: string,
         password: string,
-        scope: Array<SCOPES.ApiScope> = [SCOPES.APP_WEB, SCOPES.FILE_DOWNLOAD]
+        scope: Array<SCOPES.ApiScope> = [SCOPES.APP_WEB, SCOPES.FILE_DOWNLOAD],
     ): Promise<Token> {
         const { data } = await this.post(
             'oauth/token',
