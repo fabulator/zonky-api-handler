@@ -1,11 +1,9 @@
 module.exports = {
     extends: [
         '@socifi',
+
     ],
-    settings: {
-        polyfills: [
-            'fetch',
-            'promises',
-        ],
-    },
+    plugins: [
+        'typescript', // fix for Webstorm, otherwise it does not parse ts files
+    ],
 };

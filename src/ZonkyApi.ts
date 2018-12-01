@@ -1,14 +1,10 @@
-// @flow
 import { DateTime } from 'luxon';
-import DefaultResponseProcessor from 'rest-api-handler/src/DefaultResponseProcessor';
-import Api from 'rest-api-handler/src/Api';
-import type { ApiResponseType } from 'rest-api-handler/src';
+import { Api, DefaultResponseProcessor, ApiResponseType } from 'rest-api-handler';
 import decodeResponse from './decodeResponse';
 import ZonkyApiException from './ZonkyApiException';
 import * as SCOPES from './api-scopes';
-import type { TransactionOrientation } from './transaction-orientations';
-import type { TransactionCategory } from './transaction-categories';
-import type { ApiScope } from './api-scopes';
+import { TransactionOrientation } from './transaction-orientations';
+import { TransactionCategory } from './transaction-categories';
 
 type Token = {
     access_token: string,
@@ -16,7 +12,7 @@ type Token = {
     refresh_token: string,
     expires_in: number,
     scope: string,
-}
+};
 
 type Transaction = {
     id: number,
@@ -24,28 +20,31 @@ type Transaction = {
     discount: number,
     category: TransactionCategory,
     transactionDate: DateTime,
-    customMessage: ?string,
+    customMessage: string | undefined,
     orientation: TransactionOrientation,
     loanId: number,
     loanName: string,
     nickName: string,
-}
+};
 
 type TransactionsResponse = {
     transactions: Array<Transaction>,
     paging: {
         page: number,
         total: number,
-    }
-}
+    },
+};
 
-export default class ZonkyApi extends Api<ApiResponseType<*>> {
-    refreshToken: ?string;
-    tokenExpire: ?DateTime;
+export default class ZonkyApi extends Api<ApiResponseType<any>> {
+    protected refreshToken?: string;
 
-    static SCOPES = SCOPES;
+    protected accessToken?: string;
 
-    constructor() {
+    protected tokenExpire?: DateTime;
+
+    public static SCOPES = SCOPES;
+
+    public constructor() {
         super('https://api.zonky.cz', [
             new DefaultResponseProcessor(ZonkyApiException, decodeResponse),
         ], {
@@ -54,47 +53,61 @@ export default class ZonkyApi extends Api<ApiResponseType<*>> {
         });
     }
 
-    setRefreshToken(token: string): this {
+    public getAccessToken() {
+        return this.accessToken;
+    }
+
+    public setAccessToken(token?: string): this {
+        this.accessToken = token;
+        return this;
+    }
+
+    public setRefreshToken(token: string): this {
         this.refreshToken = token;
         return this;
     }
 
-    getRefreshToken(): ?string {
+    public getRefreshToken() {
         return this.refreshToken;
     }
 
-    setTokenExpire(expire: DateTime): this {
+    public setTokenExpire(expire: DateTime): this {
         this.tokenExpire = expire;
         return this;
     }
 
-    getTokenExpire(): ?DateTime {
+    public getTokenExpire() {
         return this.tokenExpire;
     }
 
-    async login(username: string, password: string, scope: ApiScope = SCOPES.APP_WEB): Promise<Token> {
+    public async login(
+        username: string,
+        password: string,
+        scope: Array<SCOPES.ApiScope> = [SCOPES.APP_WEB, SCOPES.FILE_DOWNLOAD]
+    ): Promise<Token> {
         const { data } = await this.post(
             'oauth/token',
             {
                 username,
                 password,
-                scope,
+                scope: scope.join(' '),
                 grant_type: 'password',
             },
-            ZonkyApi.FORMATS.URL_ENCODED_FORMAT,
+            ZonkyApi.FORMATS.URL_ENCODED,
             {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
         );
 
         this.setDefaultHeader('Authorization', `Bearer ${data.access_token}`);
+        this.setAccessToken(data.access_token);
         this.setRefreshToken(data.refresh_token);
         this.setTokenExpire(DateTime.local().plus({ seconds: data.expires_in }));
 
         return data;
     }
 
-    async getTransactions(from: ?DateTime, page: number = 0, size: ?number): Promise<TransactionsResponse> {
+    public async getTransactions(from?: DateTime, page = 0, size?: number): Promise<TransactionsResponse> {
         const response = await this.get('users/me/wallet/transactions', {
             ...(from ? { 'transaction.transactionDate': from.toFormat('yyyy-MM-dd') } : {}),
         }, {
@@ -105,7 +118,7 @@ export default class ZonkyApi extends Api<ApiResponseType<*>> {
         const { headers } = response.source;
 
         return {
-            transactions: response.data.map((transaction) => {
+            transactions: response.data.map((transaction: any) => {
                 return {
                     ...transaction,
                     transactionDate: DateTime.fromISO(transaction.transactionDate),
@@ -118,17 +131,17 @@ export default class ZonkyApi extends Api<ApiResponseType<*>> {
         };
     }
 
-    async downloadTransactions(): Promise<Buffer> {
+    public async downloadTransactions(): Promise<Buffer> {
         const { data } = await this.get('users/me/wallet/transactions/export');
         return data;
     }
 
-    async processTransactions(
+    public async processTransactions(
         processor: (workout: Transaction) => Promise<Transaction>,
-        from: ?DateTime,
-        size: number = 40,
-        page: number = 0,
-    ): Promise<*> {
+        from?: DateTime,
+        size = 40,
+        page = 0,
+    ): Promise<any> {
         const { transactions, paging } = await this.getTransactions(from, page, size);
 
         const processorPromises = transactions.map((transaction: Transaction) => {

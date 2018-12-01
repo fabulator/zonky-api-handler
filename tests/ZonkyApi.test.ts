@@ -1,4 +1,4 @@
-import { ZonkyApi } from './../src';
+import { ZonkyApi } from '../src';
 
 describe('ZonkyApi testing', () => {
     it('create api object', () => {

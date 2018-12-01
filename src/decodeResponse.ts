@@ -1,9 +1,8 @@
-// @flow
 export default function decodeResponse(response: Response): Promise<string | Buffer> {
-    const contentType: ?string = response.headers.get('content-type');
+    const contentType = response.headers.get('content-type');
 
     if (!contentType) {
-        // $FlowFixMe
+        // @ts-ignore
         return response.buffer();
     }
 
@@ -11,6 +10,6 @@ export default function decodeResponse(response: Response): Promise<string | Buf
         return response.json();
     }
 
-    // $FlowFixMe
+    // @ts-ignore
     return response.buffer();
 }

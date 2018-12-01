@@ -24,7 +24,7 @@ const { DateTime } = require('luxon');
 const { ZonkyApi } = require('zonky-api-handler');
 
 (async () => {
-    await api.login(USERNAME, PASSWORD, ZonkyApi.SCOPES.APP_WEB);
+    await api.login(USERNAME, PASSWORD);
 
     const { transactions } = await api.getTransactions(DateTime.fromISO('2018-01-01'));
     console.log(transactions);
@@ -39,7 +39,8 @@ const fs = require('fs');
 const { ZonkyApi } = require('zonky-api-handler');
 
 (async () => {
-    await api.login(USERNAME, PASSWORD, ZonkyApi.SCOPES.FILE_DOWNLOAD);
+    const api = new ZonkyApi();
+    await api.login(USERNAME, PASSWORD);
 
     const data = await api.downloadTransactions();
     fs.writeFileSync('export.xls', data);
