@@ -36,6 +36,17 @@ type TransactionsResponse = {
     },
 };
 
+async function getPromiseInterval(fn: (callback: Function) => void, timeout: number): Promise<any> {
+    return new Promise((resolve) => {
+        const interval = setInterval(() => {
+            fn((data: any) => {
+                clearInterval(interval);
+                resolve(data);
+            });
+        }, timeout);
+    });
+}
+
 export default class ZonkyApi extends Api<ApiResponseType<any>> {
     protected refreshToken?: string;
 
@@ -133,8 +144,22 @@ export default class ZonkyApi extends Api<ApiResponseType<any>> {
     }
 
     public async downloadTransactions(): Promise<Buffer> {
-        const { data } = await this.get('users/me/wallet/transactions/export');
-        return data;
+        await this.post('users/me/wallet/transactions/export');
+
+        return getPromiseInterval(async (resolve) => {
+            const { status } = await this.get('users/me/wallet/transactions/export');
+
+            if (status === 204) {
+                const headers = this.getDefaultHeaders();
+                this.setDefaultHeaders({});
+                const { data } = await this.request(
+                    `users/me/wallet/transactions/export/data?access_token=${this.getAccessToken()}`,
+                    'GET',
+                );
+                this.setDefaultHeaders(headers);
+                resolve(data);
+            }
+        }, 5000);
     }
 
     public async processTransactions(
