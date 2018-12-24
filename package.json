@@ -32,7 +32,7 @@
     "cross-fetch": "^3.0.0"
   },
   "dependencies": {
-    "luxon": "^1.8.2",
+    "luxon": "^1.8.3",
     "rest-api-handler": "^2.1.0"
   }
 }
