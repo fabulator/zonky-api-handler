@@ -75,7 +75,7 @@ const { ZonkyApi } = require('zonky-api-handler');
     fs.writeFileSync(process.argv[4], transactions);
 
     console.log(`Download investments: ${process.argv[5]}`);
-    const people = await api.downloadPeople();
+    const people = await api.downloadInvestments();
     fs.writeFileSync(process.argv[5], people);
 
     console.log("Done");
