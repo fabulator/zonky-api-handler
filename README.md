@@ -50,3 +50,34 @@ const { ZonkyApi } = require('zonky-api-handler');
     
 })()
 ```
+
+## CLI to download Zonky reports
+usage: `zonky-report-download login@email.abc password-zonky transactions.xlsx investments.xlsx`
+```javascript
+require('cross-fetch/polyfill');
+const fs = require('fs');
+const { ZonkyApi } = require('zonky-api-handler');
+
+(async () => {
+
+   if (process.argv.length!=6) {
+        console.log("zonky-report-download <login-email> <zonky-password> <transaction filename> <investments filename>");
+        console.log("zonky-report-download login@email.abc password-zonky transactions.xlsx investments.xlsx");
+        process.exit(-1);
+   }
+
+    const api = new ZonkyApi();
+    console.log(`Login to Zonky: ${process.argv[2]}`);
+    await api.login(process.argv[2], process.argv[3]);
+
+    console.log(`Download transactions: ${process.argv[4]}`);
+    const transactions = await api.downloadTransactions();
+    fs.writeFileSync(process.argv[4], transactions);
+
+    console.log(`Download investments: ${process.argv[5]}`);
+    const people = await api.downloadPeople();
+    fs.writeFileSync(process.argv[5], people);
+
+    console.log("Done");
+})()
+```
