@@ -31,7 +31,7 @@ const { ZonkyApi } = require('zonky-api-handler');
 })()
 ```
 
-You can also request export token and download xls report:
+You can also request export token and download xlsx reports:
 
 ```javascript
 require('cross-fetch/polyfill');
@@ -42,7 +42,11 @@ const { ZonkyApi } = require('zonky-api-handler');
     const api = new ZonkyApi();
     await api.login(USERNAME, PASSWORD);
 
-    const data = await api.downloadTransactions();
-    fs.writeFileSync('export.xls', data);
+    const transactions = await api.downloadTransactions();
+    fs.writeFileSync('transactions.xlsx', transactions);
+    
+    const investments = await api.downloadInvestments();
+    fs.writeFileSync('investments.xlsx', investments);
+    
 })()
 ```
