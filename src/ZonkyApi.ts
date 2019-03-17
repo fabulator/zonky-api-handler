@@ -143,6 +143,25 @@ export default class ZonkyApi extends Api<ApiResponseType<any>> {
         };
     }
 
+    public async downloadInvestments(): Promise<Buffer> {
+        await this.post('users/me/investments/export');
+
+        return getPromiseInterval(async (resolve) => {
+            const { status } = await this.get('users/me/investments/export');
+
+            if (status === 204) {
+                const headers = this.getDefaultHeaders();
+                this.setDefaultHeaders({});
+                const { data } = await this.request(
+                    `users/me/investments/export/data?access_token=${this.getAccessToken()}`,
+                    'GET',
+                );
+                this.setDefaultHeaders(headers);
+                resolve(data);
+            }
+        }, 5000);
+    }
+    
     public async downloadTransactions(): Promise<Buffer> {
         await this.post('users/me/wallet/transactions/export');
 
