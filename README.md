@@ -24,6 +24,7 @@ const { DateTime } = require('luxon');
 const { ZonkyApi } = require('zonky-api-handler');
 
 (async () => {
+    const api = new ZonkyApi();
     await api.login(USERNAME, PASSWORD);
 
     const { transactions } = await api.getTransactions(DateTime.fromISO('2018-01-01'));
