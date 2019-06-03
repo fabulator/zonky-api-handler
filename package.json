@@ -28,11 +28,11 @@
     "@socifi/eslint-config": "^2.6.1",
     "@socifi/jest-config": "^2.3.1",
     "@socifi/rollup-config": "^2.1.0",
-    "@types/luxon": "^1.13.0",
+    "@types/luxon": "^1.15.1",
     "cross-fetch": "^3.0.3"
   },
   "dependencies": {
-    "luxon": "^1.15.0",
+    "luxon": "^1.16.0",
     "rest-api-handler": "^2.1.0"
   }
 }
