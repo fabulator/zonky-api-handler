@@ -24,11 +24,12 @@
   "license": "Apache License 2.0",
   "homepage": "https://github.com/fabulator/zonky-api-handler#readme",
   "devDependencies": {
-    "@socifi/babel-config": "^0.6.0",
-    "@socifi/eslint-config": "^2.6.1",
+    "@socifi/babel-config": "^0.6.1",
+    "@socifi/eslint-config": "^2.8.0",
     "@socifi/jest-config": "^2.3.1",
     "@socifi/rollup-config": "^2.1.0",
     "@types/luxon": "^1.15.2",
+    "core-js": "^3.2.1",
     "cross-fetch": "^3.0.4"
   },
   "dependencies": {

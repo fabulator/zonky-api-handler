@@ -6,7 +6,7 @@ export default function decodeResponse(response: Response): Promise<string | Buf
         return response.buffer();
     }
 
-    if (contentType.indexOf('json') >= 0) {
+    if (contentType.includes('json')) {
         return response.json();
     }
 

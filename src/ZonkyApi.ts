@@ -1,4 +1,4 @@
-/* eslint-disable camelcase */
+/* eslint-disable @typescript-eslint/camelcase */
 import { DateTime } from 'luxon';
 import { Api, DefaultResponseProcessor, ApiResponseType } from 'rest-api-handler';
 import decodeResponse from './decodeResponse';
@@ -7,15 +7,15 @@ import * as SCOPES from './api-scopes';
 import { TransactionOrientation } from './transaction-orientations';
 import { TransactionCategory } from './transaction-categories';
 
-type Token = {
+interface Token {
     access_token: string,
     token_type: string,
     refresh_token: string,
     expires_in: number,
     scope: string,
-};
+}
 
-type Transaction = {
+interface Transaction {
     id: number,
     amount: number,
     discount: number,
@@ -26,15 +26,15 @@ type Transaction = {
     loanId: number,
     loanName: string,
     nickName: string,
-};
+}
 
-type TransactionsResponse = {
-    transactions: Array<Transaction>,
+interface TransactionsResponse {
+    transactions: Transaction[],
     paging: {
         page: number,
         total: number,
     },
-};
+}
 
 async function getPromiseInterval(fn: (callback: Function) => void, timeout: number): Promise<any> {
     return new Promise((resolve) => {
@@ -95,7 +95,7 @@ export default class ZonkyApi extends Api<ApiResponseType<any>> {
     public async login(
         username: string,
         password: string,
-        scope: Array<SCOPES.ApiScope> = [SCOPES.APP_WEB, SCOPES.FILE_DOWNLOAD],
+        scope: SCOPES.ApiScope[] = [SCOPES.APP_WEB, SCOPES.FILE_DOWNLOAD],
     ): Promise<Token> {
         const { data } = await this.post(
             'oauth/token',
