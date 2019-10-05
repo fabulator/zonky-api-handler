@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [2.1.0] - 2019-10-05
 ### Added
 - Add parameter smsCode to downloadTransactions method
+- Added downloadInvestments method, thanks @vvvlc
 
 
 ## [2.0.1] - 2018-12-02

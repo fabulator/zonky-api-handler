@@ -143,11 +143,11 @@ export default class ZonkyApi extends Api<ApiResponseType<any>> {
         };
     }
 
-    public async downloadTransactions(smsCode?: string): Promise<Buffer> {
-        await this.post('users/me/wallet/transactions/export');
+    public async download(endpoint: string, smsCode?: string): Promise<Buffer> {
+        await this.post(endpoint);
 
         return getPromiseInterval(async (resolve) => {
-            const { status } = await this.get('users/me/wallet/transactions/export');
+            const { status } = await this.get(endpoint);
 
             if (status === 204) {
                 const headers = this.getDefaultHeaders();
@@ -156,7 +156,7 @@ export default class ZonkyApi extends Api<ApiResponseType<any>> {
                     ...(smsCode ? { 'x-authorization-code': smsCode } : {}),
                 });
                 const { data } = await this.request(
-                    `users/me/wallet/transactions/export/data?access_token=${this.getAccessToken()}`,
+                    `${endpoint}/data?access_token=${this.getAccessToken()}`,
                     'GET',
                 );
 
@@ -164,6 +164,14 @@ export default class ZonkyApi extends Api<ApiResponseType<any>> {
                 resolve(data);
             }
         }, 5000);
+    }
+
+    public async downloadTransactions(smsCode?: string): Promise<Buffer> {
+        return this.download('users/me/wallet/transactions/export', smsCode);
+    }
+
+    public async downloadInvestments(): Promise<Buffer> {
+        return this.download('users/me/investments/export');
     }
 
     public async processTransactions(
