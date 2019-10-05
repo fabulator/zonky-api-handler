@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [2.1.0] - 2019-10-05
+### Added
+- Add parameter smsCode to downloadTransactions method
+
+
 ## [2.0.1] - 2018-12-02
 ### Fixed
 - Fix script for download of wallet transactions
