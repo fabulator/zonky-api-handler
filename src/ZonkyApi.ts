@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { DateTime } from 'luxon';
-import { Api, DefaultResponseProcessor, ApiResponseType } from 'rest-api-handler';
-import decodeResponse from './decodeResponse';
-import ZonkyApiException from './ZonkyApiException';
+import { Api, ApiResponseType } from 'rest-api-handler';
+import responseProcessor from './responseProcessor';
 import * as SCOPES from './api-scopes';
+import * as ERROR_CODES from './error-codes';
 import { TransactionOrientation } from './transaction-orientations';
 import { TransactionCategory } from './transaction-categories';
 
@@ -36,12 +36,15 @@ interface TransactionsResponse {
     },
 }
 
-async function getPromiseInterval(fn: (callback: Function) => void, timeout: number): Promise<any> {
-    return new Promise((resolve) => {
+async function getPromiseInterval(fn: (resolve: Function, reject: Function) => void, timeout: number): Promise<any> {
+    return new Promise((resolve, reject) => {
         const interval = setInterval(() => {
             fn((data: any) => {
                 clearInterval(interval);
                 resolve(data);
+            }, (data: any) => {
+                clearInterval(interval);
+                reject(data);
             });
         }, timeout);
     });
@@ -56,10 +59,10 @@ export default class ZonkyApi extends Api<ApiResponseType<any>> {
 
     public static SCOPES = SCOPES;
 
+    public static ERROR_CODES = ERROR_CODES;
+
     public constructor() {
-        super('https://api.zonky.cz', [
-            new DefaultResponseProcessor(ZonkyApiException, decodeResponse),
-        ], {
+        super('https://api.zonky.cz', [responseProcessor], {
             Authorization: 'Basic d2ViOndlYg==',
             'Content-Type': 'application/json',
         });
@@ -146,22 +149,27 @@ export default class ZonkyApi extends Api<ApiResponseType<any>> {
     public async download(endpoint: string, smsCode?: string): Promise<Buffer> {
         await this.post(endpoint);
 
-        return getPromiseInterval(async (resolve) => {
-            const { status } = await this.get(endpoint);
+        return getPromiseInterval(async (resolve, reject) => {
+            const headers = this.getDefaultHeaders();
 
-            if (status === 204) {
-                const headers = this.getDefaultHeaders();
+            try {
+                const { status } = await this.get(endpoint);
 
-                this.setDefaultHeaders({
-                    ...(smsCode ? { 'x-authorization-code': smsCode } : {}),
-                });
-                const { data } = await this.request(
-                    `${endpoint}/data?access_token=${this.getAccessToken()}`,
-                    'GET',
-                );
+                if (status === 204) {
+                    this.setDefaultHeaders({
+                        ...(smsCode ? { 'x-authorization-code': smsCode } : {}),
+                    });
+                    const { data } = await this.request(
+                        `${endpoint}/data?access_token=${this.getAccessToken()}`,
+                        'GET',
+                    );
 
+                    this.setDefaultHeaders(headers);
+                    resolve(data);
+                }
+            } catch (exception) {
                 this.setDefaultHeaders(headers);
-                resolve(data);
+                reject(exception);
             }
         }, 5000);
     }

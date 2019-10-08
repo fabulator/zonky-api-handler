@@ -1,6 +1,6 @@
 {
   "name": "zonky-api-handler",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Unofficial handler for Zonky API",
   "main": "dist/index.js",
   "jsnext:main": "dist/index.esm.js",
@@ -24,16 +24,17 @@
   "license": "Apache License 2.0",
   "homepage": "https://github.com/fabulator/zonky-api-handler#readme",
   "devDependencies": {
-    "@socifi/babel-config": "^0.6.2",
+    "@socifi/babel-config": "^0.7.0",
     "@socifi/eslint-config": "^2.8.0",
     "@socifi/jest-config": "^2.3.1",
     "@socifi/rollup-config": "^2.1.0",
     "@types/luxon": "^1.15.2",
     "core-js": "^3.2.1",
-    "cross-fetch": "^3.0.4"
+    "cross-fetch": "^3.0.4",
+    "vorpal": "^1.12.0"
   },
   "dependencies": {
     "luxon": "^1.19.3",
-    "rest-api-handler": "^2.1.0"
+    "rest-api-handler": "^2.2.0"
   }
 }

@@ -42,14 +42,64 @@ const { ZonkyApi } = require('zonky-api-handler');
 (async () => {
     const api = new ZonkyApi();
     await api.login(USERNAME, PASSWORD);
-
-    const transactions = await api.downloadTransactions();
-    fs.writeFileSync('transactions.xlsx', transactions);
     
     const investments = await api.downloadInvestments();
     fs.writeFileSync('investments.xlsx', investments);
     
 })()
+```
+
+## Downloading of transactions.
+
+To download transactions you need to authorize through the SMS code. Example with Vorpal CLI:
+
+```javascript
+require('cross-fetch/polyfill');
+const vorpal = require('vorpal')();
+const { ZonkyApi, EXCEPTION } = require('zonky-api-handler');
+
+const USERNAME = 'XXX';
+const PASSWORD = 'XXX';
+
+const api = new ZonkyApi();
+
+vorpal.command('download', 'Download transaction report.')
+    .action(async function (args, cb) {
+        // login user
+        await api.login(USERNAME, PASSWORD);
+
+        // send request to download transaction
+        try {
+            await api.downloadTransactions();
+        } catch (exception) {
+            // if the error is SMS required, continue, otherwise show an error
+            if (!(exception instanceof EXCEPTION.ZonkyApiSMSException)) {
+                throw exception;
+            }
+
+            console.log('SMS code was sent to your phone.');
+        }
+
+        // request SMS code from user
+        const { sms } = await this.prompt([
+            {
+                type: 'input',
+                name: 'sms',
+                message: 'SMS code: ',
+            },
+        ]);
+
+        // download file with the SMS code
+        const data = await api.downloadTransactions(sms);
+
+        // print output
+        console.log(data);
+        cb();
+    });
+
+vorpal
+    .show()
+    .parse(process.argv);
 ```
 
 ## CLI to download Zonky reports

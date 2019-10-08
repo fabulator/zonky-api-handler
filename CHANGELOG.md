@@ -1,6 +1,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [2.2.0] - 2019-10-08
+### Added
+- Better description of OTP for downloading of transactions.
+
+### Changed
+- Better handling of errors with multiple exception
+
+
 ## [2.1.0] - 2019-10-05
 ### Added
 - Add parameter smsCode to downloadTransactions method
