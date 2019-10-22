@@ -1,6 +1,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [2.3.0] 2019-10-22
+### Changed
+- [5e253be](https://github.com/fabulator/zonky-api-handler/commit/5e253be9e55e3696fb4722b997b838048aa1a0a7) Update dependencies
+
+### Other
+- [ceaa2d3](https://github.com/fabulator/zonky-api-handler/commit/ceaa2d37d2cc7dcc853afbe3deb2ed8450227f05) Update dependency core-js to ^3.3.2
+- [e01f360](https://github.com/fabulator/zonky-api-handler/commit/e01f36076c582d0eb9db58ca6525ee99cc6e5bb9) Update dependency core-js to ^3.3.1
+
 ## [2.2.0] - 2019-10-08
 ### Added
 - Better description of OTP for downloading of transactions.
