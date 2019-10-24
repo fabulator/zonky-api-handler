@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [2.4.0] 2019-10-24
+### Changed
+- [a52a133](https://github.com/fabulator/zonky-api-handler/commit/a52a133a7ebc695b6afd1559e0adb195d955b8f4) Update dev dependency @socifi/rollup-config to ^2.2.2
+
 ## [2.3.0] 2019-10-22
 ### Changed
 - [5e253be](https://github.com/fabulator/zonky-api-handler/commit/5e253be9e55e3696fb4722b997b838048aa1a0a7) Update dependencies
