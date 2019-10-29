@@ -36,6 +36,6 @@
   "dependencies": {
     "@types/luxon": "^1.15.2",
     "luxon": "^1.19.3",
-    "rest-api-handler": "^2.3.0"
+    "rest-api-handler": "^2.4.1"
   }
 }
