@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [2.11.0] 2019-11-25
+### Changed
+- [a636884](https://github.com/fabulator/zonky-api-handler/commit/a636884de21cefca5f78360e5b8589ce2e752e49) Update dependency rest-api-handler to v2.6.0
+
 ## [2.10.0] 2019-11-19
 ### Changed
 - [233d3b1](https://github.com/fabulator/zonky-api-handler/commit/233d3b1f2f976f1b734c03a89c177f12bba93f8e) Update dependency luxon to v1.21.2
