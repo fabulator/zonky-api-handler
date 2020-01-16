@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [2.17.0] 2020-01-16
+### Changed
+- [6746a96](https://github.com/fabulator/zonky-api-handler/commit/6746a965e13eddab28c68b24e247ca053fb65ef0) Update dependency rest-api-handler to v2.11.0
+
 ## [2.16.0] 2020-01-14
 ### Changed
 - [b7e3a35](https://github.com/fabulator/zonky-api-handler/commit/b7e3a353a5aade64751dcc8c95a10105825a4c7f) Update dependency rest-api-handler to v2.10.0
