@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [2.20.0] 2020-03-07
+### Changed
+- [3912c16](https://github.com/fabulator/zonky-api-handler/commit/3912c164861ed831b5ab0dc379dd04c7024fe212) Update dependency rest-api-handler to v2.13.0
+- [0b7fb01](https://github.com/fabulator/zonky-api-handler/commit/0b7fb014e2a9a274c3af6b74f2a4d090fd914b93) Update dev dependency @socifi/eslint-config to v2.10.2 
+
 ## [2.19.0] 2020-02-01
 ### Changed
 - [58b7174](https://github.com/fabulator/zonky-api-handler/commit/58b7174345bb64ae4df50323f32511f7e50d36e6) Update dependency rest-api-handler to v2.12.0
