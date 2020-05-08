@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [2.27.0] 2020-05-08
+### Changed
+- [4a3f7e1](https://github.com/fabulator/zonky-api-handler/commit/4a3f7e13981bb3c9bdf20f8bbcb5cb270beb0889) Update dependency @types/luxon to v1.24.0
+
 ## [2.26.0] 2020-05-05
 ### Changed
 - [8f4f316](https://github.com/fabulator/zonky-api-handler/commit/8f4f316a3126392fcdff5577c3c42771fa1cb191) Update dependency luxon to v1.24.1
