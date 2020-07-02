@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [2.32.0] 2020-07-02
+### Changed
+- [0593f20](https://github.com/fabulator/zonky-api-handler/commit/0593f20c5ad9829e4eef266a4fc73c1cbb2de8ea) Update dependency rest-api-handler to v2.19.0
+
 ## [2.31.0] 2020-06-25
 ### Changed
 - [82e47f8](https://github.com/fabulator/zonky-api-handler/commit/82e47f811d7a51a209ce43b390fb0a096484e826) Update dependency @types/luxon to v1.24.1
