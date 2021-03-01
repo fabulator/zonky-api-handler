@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## v2.35.29 (2021-03-01)
+### Fixed
+- [940f256](https://github.com/fabulator/zonky-api-handler/commit/940f2560e823f4bb2c5ab4525c37fef58cdc8156) Update lock for security updated
+
 ## v2.35.28 (2021-02-15)
 ### Fixed
 - [9f5e400](https://github.com/fabulator/zonky-api-handler/commit/9f5e400f2476253afb8ff256d6d33b9682495248) Update lock for security updated
