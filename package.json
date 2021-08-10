@@ -34,8 +34,8 @@
     "semantic-release-config-fabulator": "^2.0.0"
   },
   "dependencies": {
-    "@types/luxon": "^1.15.2",
-    "luxon": "^1.21.1",
+    "@types/luxon": "^2.0.0",
+    "luxon": "^2.0.0",
     "rest-api-handler": "^2.4.1"
   }
 }
